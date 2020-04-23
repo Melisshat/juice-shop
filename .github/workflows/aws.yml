@@ -19,5 +19,5 @@ jobs:
       run: |
         sed -i "s#IMAGE_NAME#melisshat/juice-shop#g" kustomization.yaml
         sed -i "s/IMAGE_TAG/sha-$(git rev-parse --short HEAD)/g" kustomization.yaml
-        aws eks update-kubeconfig --name juiceshop
+        aws eks update-kubeconfig --name juice-shop
         kubectl kustomize . | kubectl apply -f -
