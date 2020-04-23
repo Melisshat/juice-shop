@@ -3,9 +3,6 @@ on:
   push:
     branches: [ master ]
 
-env:
-  AWS_REGION: us-east-1
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -13,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: configure-to-aws
       run: |
-        aws configure set default.region $AWS_REGION
+        aws configure set default.region us-east-1
         aws configure set default.output json
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
