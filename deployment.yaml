@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webserver-deployment
+  name: juice-shop-deployment
   labels:
-    app: webserver
+    app: juice-shop
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webserver
+      app: juice-shop
   template:
     metadata:
       labels:
-        app: webserver
+        app: juice-shop
     spec:
       containers:
-      - name: webserver
-        image: mywebserver:1.0
+      - name: juice-shop
+        image: melisshat/juice-shop:1.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
@@ -24,10 +24,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: webserver-service
+  name: juice-shop-service
 spec:
   selector:
-    app: webserver
+    app: juice-shop
   ports:
     - port: 80
       targetPort: 3000

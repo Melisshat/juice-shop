@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   - deployment.yaml
 images:
-  - name: mywebserver
+  - name: melisshat/juice-shop
     newName: IMAGE_NAME
     newTag: IMAGE_TAG
