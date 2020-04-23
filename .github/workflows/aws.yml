@@ -1,8 +1,7 @@
 name: "Deploy aws Stack"
 on: 
   push:
-    branches:
-    - master
+    branches: [ master ]
 
 env:
   AWS_REGION: us-east-1
