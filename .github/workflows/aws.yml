@@ -1,0 +1,27 @@
+name: "Deploy CloudFormation Stack"
+on: 
+  push:
+    branches:
+    - master
+
+env:
+  AWS_REGION: us-east-1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: configure-to-aws
+      run: |
+        aws configure set default.region $AWS_REGION
+        aws configure set default.output json
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws configure set aws_session_token ${{ secrets.AWS_SESSION_TOKEN }}
+    - name: deploy-to-k8s
+      run: |
+        sed -i "s#IMAGE_NAME#melisshat/juice-shop#g" kustomization.yaml
+        sed -i "s/IMAGE_TAG/sha-$(git rev-parse --short HEAD)/g" kustomization.yaml
+        aws eks update-kubeconfig --name juiceshop
+        kubectl kustomize . | kubectl apply -f -
