@@ -1,0 +1,23 @@
+name: "Klar"
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build-push
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        registry: docker.io
+        repository: melisshat/juice-shop
+        tag_with_sha: true
+    - name: use klar
+      run: |
+        wget https://github.com/optiopay/klar/releases/download/v2.4.0/klar-2.4.0-linux-amd64 -O klar
+        chmod +x klar
+        CLAIR_ADDR=http://clair.3r1.co:6060 ./klar docker.io/melisshat/juice-shop:sha-$(git rev-parse --short HEAD)
