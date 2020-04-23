@@ -2,7 +2,7 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: isen-2
+  name: juice-shop
   region: us-east-1
 
 vpc:
@@ -14,7 +14,7 @@ nodeGroups:
     ami: ami-0e5bb2367e692b807
     instanceType: m5.large
     desiredCapacity: 1
-    
+
 availabilityZones:
   - us-east-1c
   - us-east-1d
